@@ -1,0 +1,48 @@
+# Python ইগনোর
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.python-version
+
+# এনভায়রনমেন্ট ও ভার্চুয়াল এনভ
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ডকুমেন্টেশন ও টেস্ট
+docs/
+tests/
+
+# IDE ফাইল
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# লগ ফাইল
+*.log
+logs/
+
+# ডাউনলোড ফোল্ডার (ভলিউমে মাউন্ট হবে)
+downloads/
+
+# OS স্পেসিফিক ফাইল
+.DS_Store
+Thumbs.db
+
+# কনফিগ ফাইল
+bot.session
+config.py
+
+# Docker সম্পর্কিত ফাইল
+Dockerfile
+docker-compose.yml
+.dockerignore
