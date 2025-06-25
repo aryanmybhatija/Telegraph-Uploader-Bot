@@ -100,24 +100,14 @@ def upload_to_telegraph(file_path):
         
         # Handle response
         if response.status_code != 200:
-            error_msg = f"API returned status: {response.status_code}"
-            if response.text:
-                error_msg += f", Response: {response.text[:200]}"
-            raise Exception(error_msg)
-        
+            raise Exception(f"API returned status: {response.status_code}, Response: {response.text}")
         result = response.json()
-        
-        # Extract URL from response
+        logger.info(f"Telegraph response: {result}")
         if isinstance(result, list) and result and 'src' in result[0]:
-            return f"https://graph.org{result[0]['src']}"
-        elif isinstance(result, dict) and 'src' in result:
-            return f"https://graph.org{result['src']}"
+            return f"https://telegra.ph{result[0]['src']}"
         elif 'error' in result:
             raise Exception(result['error'])
-        
-        # If no valid response structure found
-        raise Exception(f"Unexpected API response: {response.text[:200]}")
-    
+        raise Exception(f"Unexpected API response: {response.text}")
     except Exception as e:
         logger.error(f"Telegraph upload error: {e}")
         raise Exception(f"Telegraph upload failed: {str(e)}")
