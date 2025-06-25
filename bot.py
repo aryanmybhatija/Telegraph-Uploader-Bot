@@ -126,8 +126,8 @@ def create_telegraph_page(title, content_html):
     """Create Telegraph page using graph.org"""
     data = {
         "title": title[:256],
-        "author_name": "Anonymous",
-        "author_url": "https:\/\/edit.graph.org\/auth\/w6zu1aND9RChJTOk7LEFZEQSxiobbkoHrVbq3W3aOF",
+        "author_name": "Ajay",
+        "author_url": "https://t.me/Sonuporsa",
         "return_content": False
     }
     
