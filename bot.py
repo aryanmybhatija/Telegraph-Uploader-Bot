@@ -104,7 +104,7 @@ def upload_to_telegraph(file_path):
         result = response.json()
         logger.info(f"Telegraph response: {result}")
         if isinstance(result, list) and result and 'src' in result[0]:
-            return f"https://telegra.ph{result[0]['src']}"
+            return f"https://graph.org{result[0]['src']}"
         elif 'error' in result:
             raise Exception(result['error'])
         raise Exception(f"Unexpected API response: {response.text}")
