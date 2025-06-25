@@ -13,11 +13,11 @@ from PIL import Image
 # ====================== #
 # 👇 YOUR API DETAILS 👇  #
 # ====================== #
-API_ID = 1701392
-API_HASH = "add_your_hash_Lala"
-BOT_TOKEN = "add_your_token_Lala"
-TELEGRAPH_ACCESS_TOKEN = "add_your_telegraph_token_Lala"
 
+API_ID = int(os.environ.get("API_ID", 0))
+API_HASH = os.environ.get("API_HASH", "")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+TELEGRAPH_ACCESS_TOKEN = os.environ.get("TELEGRAPH_ACCESS_TOKEN", "")
 # Logging setup
 logging.basicConfig(
     level=logging.INFO,
