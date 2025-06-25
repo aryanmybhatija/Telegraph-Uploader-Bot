@@ -57,14 +57,14 @@ START_IMAGE_URL = "https://i.ibb.co/j9n6nZxD/Op-log.png"
 START_TEXT = """
 🌟 **Hello {user_name}!**
 
-I'm **AngelBot Telegraph Uploader** 🤖  
+I'm **Telegraph Uploader Bot ** 🤖  
 I'll upload any image to Telegraph and give you the link!
 
 📁 **Supported Formats:**
 ```{formats}```
 📏 **Size Limit:** `{limit}MB`
 
-⚡️ **Developer:** @Opleech_WD
+⚡️ **Developer:** @Team_Sonu1
 """
 
 HELP_TEXT = """
@@ -126,8 +126,8 @@ def create_telegraph_page(title, content_html):
     """Create Telegraph page using graph.org"""
     data = {
         "title": title[:256],
-        "author_name": "AngelBot",
-        "author_url": "https://t.me/Opleech_WD",
+        "author_name": "Anonymous",
+        "author_url": "https:\/\/edit.graph.org\/auth\/w6zu1aND9RChJTOk7LEFZEQSxiobbkoHrVbq3W3aOF",
         "return_content": False
     }
     
@@ -207,12 +207,12 @@ async def start(_, message):
             parse_mode=ParseMode.MARKDOWN,
             reply_markup=InlineKeyboardMarkup([
                 [
-                    InlineKeyboardButton("📢 Update Channel", url="https://t.me/Opleech_WD"),
-                    InlineKeyboardButton("💬 Support Group", url="https://t.me/Opleech_WD")
+                    InlineKeyboardButton("📢 Update Channel", url="https://t.me/Team_Sonu"),
+                    InlineKeyboardButton("💬 Support Group", url="https://t.me/BotChatAll")
                 ],
                 [
                     InlineKeyboardButton("ℹ️ Help", callback_data="help"),
-                    InlineKeyboardButton("✨ Premium", url="https://t.me/Opleech_WD")
+                    InlineKeyboardButton("✨ Premium", url="https://t.me/Contact_AdminSbot")
                 ]
             ])
         )
@@ -261,7 +261,7 @@ async def handle_media(_, message):
         file_size = message.document.file_size
         file_name = message.document.file_name or ""
         file_ext = os.path.splitext(file_name)[1].lower()
-        caption = message.caption or "Uploaded by AngelBot"
+        caption = message.caption or "Telegraph Uploader"
     else:
         return
     
@@ -316,7 +316,7 @@ async def handle_media(_, message):
                     InlineKeyboardButton("📤 Share Link", url=f"tg://msg_url?url={telegraph_page_url}")
                 ],
                 [
-                    InlineKeyboardButton("🔄 Upload Another File", url=f"https://t.me/{angelbot.me.username}?start=upload")
+                    InlineKeyboardButton("🔄 Upload Another File", url=f"https://t.me/{Telegraph.me.username}?start=upload")
                 ]
             ])
         )
@@ -331,5 +331,5 @@ async def handle_media(_, message):
             os.remove(file_path)
 
 if __name__ == "__main__":
-    logger.info("Starting AngelBot Telegraph...")
+    logger.info("Starting Telegraph...")
     angelbot.run()
