@@ -256,7 +256,7 @@ async def handle_media(_, message):
     if message.media == MessageMediaType.PHOTO:
         file_size = message.photo.file_size
         file_ext = ".jpg"
-        caption = message.caption or "Uploaded by AngelBot"
+        caption = message.caption or "Uploaded by Telegraph"
     elif message.media == MessageMediaType.DOCUMENT:
         file_size = message.document.file_size
         file_name = message.document.file_name or ""
