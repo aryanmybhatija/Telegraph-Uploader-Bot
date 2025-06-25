@@ -237,4 +237,68 @@ async def handle_media(_, message):
 
         if file_size > LIMIT:
             return await message.reply_text(
-                f"❌ File size too
+                f"❌ File size too big! Maximum size: `{LIMIT//(1024*1024)}MB`\n"
+            f"Your file size: `{file_size//(1024*1024)}MB`",
+            parse_mode=ParseMode.MARKDOWN
+        )
+    
+    # Check supported formats
+    if not any(file_ext.endswith(ext) for ext in SUPPORTED_FORMATS):
+        return await message.reply_text(
+            f"❌ Unsupported format! File format: `{file_ext or 'Unknown'}`\n\n"
+            f"**Supported Formats:**\n{', '.join(SUPPORTED_FORMATS)}",
+            parse_mode=ParseMode.MARKDOWN
+        )
+    
+    # Process file
+    try:
+        msg = await message.reply_text("📥 Downloading...", quote=True)
+        file_name = os.path.join(DOWNLOAD_DIR, f"file_{message.id}{file_ext}")
+        file_path = await message.download(file_name)
+        
+        await msg.edit("🔄 Optimizing image...")
+        
+        # Optimize image
+        file_path = optimize_image(file_path)
+        
+        await msg.edit("☁️ Uploading to Telegraph...")
+        telegraph_image_url = upload_to_telegraph(file_path)
+        
+        await msg.edit("📝 Creating Telegraph page...")
+        telegraph_page_url = generate_page_with_image(
+            image_url=telegraph_image_url,
+            description=caption,
+            title=caption[:256] or "📸 Uploaded Image"
+        )
+        
+        # Generate result
+        await msg.edit(
+            text=f"✅ **Telegraph page created!**\n\n"
+                 f"📝 **Title:** `{caption[:50]}{'...' if len(caption) > 50 else ''}`\n"
+                 f"📏 **Image Size:** `{os.path.getsize(file_path)//1024}KB`\n"
+                 f"🔗 **Link:** [Click Here]({telegraph_page_url})",
+            parse_mode=ParseMode.MARKDOWN,
+            disable_web_page_preview=False,
+            reply_markup=InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("🌐 Open Link", url=telegraph_page_url),
+                    InlineKeyboardButton("📤 Share Link", url=f"tg://msg_url?url={telegraph_page_url}")
+                ],
+                [
+                    InlineKeyboardButton("🔄 Upload Another File", url=f"https://t.me/{angelbot.me.username}?start=upload")
+                ]
+            ])
+        )
+    except Exception as e:
+        logger.error(f"Processing error: {e}")
+        await msg.edit(
+            f"❌ Upload failed!\n\n**Error:** `{str(e)}`", 
+            parse_mode=ParseMode.MARKDOWN
+        )
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+if __name__ == "__main__":
+    logger.info("Starting AngelBot Telegraph...")
+    angelbot.run()
